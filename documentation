@@ -1,0 +1,47 @@
+IMPORTANT NOTE
+FOLLOWING PACKAGES IS INDEPENDENT FROM C STANDART LIBRARY!
+<stdbool.h> ==> bool datatype
+<stddef.h>  ==> size_t NULL
+<stdint.h>  ==> uintx_t
+<float.h>
+<iso646.h>
+<limits.h>
+<stdarg.h>
+THESE ARE FREESTANDING LIBS
+
+COMPILATION OF SOURCE FILES
+
+ASSEMBLY FILES
+i686-elf-as boot.s -o boot.o
+
+C FILES
+i686-elf-gcc -c kernel.c -o kernel.o -std=gnu99 -ffreestanding -Wall -Wextra
+
+LINKER FILES
+i686-elf-gcc -T linker.ld -o kernel.bin -ffreestanding -nostdlib boot.o kernel.o -lgcc
+
+
+Verifying Multiboot
+if grub-file --is-x86-multiboot kernel.bin; then
+   echo multiboot confirmed
+else
+    echo the file is not multiboot
+fi
+
+
+The VGA Text Buffer
+located at 0xB8000
+0-7 bits ASCII
+8-11 Foreground color
+12-14 Background color
+15 Blink
+
+Number          Color       Number + Bright Bit         Bright Color
+0x0             Black               0x8                 Dark Gray
+0x1             Blue                0x9                 Light Blue
+0x2             Green               0xa                 Light Green
+0x3             Cyan                0xb                 Light Cyan
+0x4             Red                 0xc                 Light Red
+0x5             Magenta             0xd                 Pink
+0x6             Brown               0xe                 Yellow
+0x7             Light Gray          0xf                 White

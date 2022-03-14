@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if grub-file --is-x86-multiboot ~/os/kernel.bin; then
+    echo multiboot confirmed
+    cp ~/os/kernel.bin  ~/os/isodir/boot/kernel.bin
+    grub-mkrescue ~/os/isodir -o ~/os/kernel.iso
+else
+    echo the file is not multiboot
+fi
