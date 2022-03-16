@@ -25,13 +25,39 @@ static void roll()
     row = SCREEN_HEIGHT/2 ;
 }
 
-void monitor_init()
+
+static void move_cursor(void){
+
+    uint16_t cursor = SCREEN_WIDTH * row + col;
+
+    outb(0x3D4,14);
+    outb(0X3D5,cursor >> 8);
+    outb(0x3D4,15);
+    outb(0x3D5,cursor);
+
+
+}
+static void cursor_init()
+{
+    outb(0x3D4,0x0A);
+    outb(0x3D5, (inb(0x3D5) & 0xC0) | 0);
+
+    outb(0x3D4,0x0B);
+    outb(0x3D5, (inb(0x3D5) & 0xE0) | SCREEN_HEIGHT);
+
+    move_cursor();
+}
+
+
+void monitor_init(void)
 {
      pMonitor = (uint16_t *) VGA_ADDRESS;
 
      attr = 0;
 
      monitor_clear();
+
+     cursor_init();
 
 }
 
@@ -66,7 +92,7 @@ void monitor_putchar(const char c)
     }
 
     }
-
+    move_cursor();
     
 }
 
@@ -74,12 +100,12 @@ void monitor_clear(void)
 {
     for(int i = 0;i < SCREEN_WIDTH*SCREEN_HEIGHT;i++)
     {
-        pMonitor[i] = entry(' ',entry_color(VGA_COLOR_BLACK,VGA_COLOR_BLACK));
+        pMonitor[i] = entry(' ',entry_color(VGA_COLOR_WHITE,VGA_COLOR_BLACK));
 
     }
     row = 0;
     col = 0;
-
+    move_cursor();
 }
 
 void monitor_write(const char *pStr)

@@ -1,9 +1,9 @@
 #include "common.h"
 
 /* Write a byte to the specified port */
-void outb(unsigned short port,unsigned char value)
+void outb(uint16_t port,uint8_t data)
 {
-    asm volatile ("outb %1, %0" : : "dN" (port),"a" (value));
+    asm volatile("outb %0, %1" : : "a" (data),"Nd" (port));
 }
 /* Take one byte input from specified port */
 

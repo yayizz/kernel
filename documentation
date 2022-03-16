@@ -45,3 +45,4 @@ Number          Color       Number + Bright Bit         Bright Color
 0x5             Magenta             0xd                 Pink
 0x6             Brown               0xe                 Yellow
 0x7             Light Gray          0xf                 White
+

@@ -5,8 +5,8 @@
 #include <stddef.h>
 #include <stdbool.h>
 
-void outb(unsigned short port,unsigned char value);
-unsigned char inb(unsigned short port);
+void outb(uint16_t port,uint8_t  value);
+uint8_t inb(uint16_t port);
 unsigned short inw(unsigned short port);
 
 int len(const char *pStr);

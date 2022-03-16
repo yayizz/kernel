@@ -13,8 +13,11 @@
 void kernel_main(void)
 {
     monitor_init();
-    for(int i = 0;i <25;i++)
-        monitor_write("hello\n");
-    monitor_write("zeynooo");
 
+    monitor_write("hello\n");
+
+    monitor_write("is anyone home\n");
+
+    for(int i = 0;i<500000000;i++);
+    monitor_clear();
 }

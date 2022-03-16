@@ -14,7 +14,7 @@
 #define WHITE_ON_BLACK 0x0f
 
 
-void monitor_init();
+void monitor_init(void);
 void monitor_putchar(const char c);
 
 void monitor_clear(void);
