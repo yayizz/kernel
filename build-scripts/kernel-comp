@@ -1,0 +1,13 @@
+#!/bin/bash
+
+printf "Removing all object files (except boot.o) from linker directory\n"
+rm -r ~/os/linker/common.o ~/os/linker/monitor.o ~/os/linker/kernel.o
+printf "building common.o\n"
+i686-elf-gcc -c ~/os/drivers/common.c -o ~/os/linker/common.o -std=gnu99 -ffreestanding -Wall -Wextra
+printf "building monitor.o\n"
+i686-elf-gcc -c ~/os/drivers/monitor.c -o ~/os/linker/monitor.o -std=gnu99 -ffreestanding -Wall -Wextra
+printf "building kernel.o\n"
+i686-elf-gcc -c ~/os/kernel/kernel.c -o ~/os/linker/kernel.o -std=gnu99 -ffreestanding -Wall -Wextra
+printf "linking the object files\n"
+i686-elf-gcc -T ~/os/linker/linker.ld -o ~/os/kernel.bin -ffreestanding -nostdlib ~/os/linker/boot.o ~/os/linker/kernel.o ~/os/linker/monitor.o ~/os/linker/common.o -lgcc
+printf "done\n"

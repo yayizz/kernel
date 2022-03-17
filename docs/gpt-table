@@ -1,0 +1,73 @@
+
+Segment
+    A logically contiguous chunk of emmory with consistent proporties
+
+Segment Register
+        A register of your CPU that refers to a segment for a particular purpose
+        (CS,DS,SS,ES) or for general use (FS,GS)
+
+Segment Selector
+        A reference to a descriptor, which you can load into a segment register;
+        the selector is an offset into a descriptor table pointing to one of entries
+
+
+
+
+
+Global Descriptor Table (GDT)
+defines base access privileges for certain parts of memory.
+
+GDT is used for:
+->Generate segment violation exceptions with "Paging"
+->Defines if a section in memory is executable or if it is data.
+->Define Task State Segments (TSSes --used in hardware-based multitasking)
+
+CS Register (Code Segment Register)
+tells the processor which offset into the the GTD that it will find the access
+privileges in which to execute the current code.
+
+DS Register (Data Segment Register)
+defines the access priveleges for the current data.
+ES,FS,GS are simply alternative to DS
+
+GDT is 64-bit long. The entries of GDT define where in memory that the allowed
+region will start, as well as the limit of this region, and the access priveleges
+associated with this entry. One common rule is that the first entry in GDT is NULL.
+
+NOTE
+No segment register should be set to 0, otherwise will cause a General Protection fault
+
+GDT also defines wheter or not the current segment that the processor running in is
+for System use (Ring 0) or for Application use (Ring 3).
+
+  7   6   5   4   3   2   1   0
+|   |   |   |   |   |   |   |   |
+
+8th byte: ptr
+7th byte: low byte: limit | high byte: flags
+6th byte Access byte
+5-3 bytes: ptr
+2-1 bytes: limit
+
+
+
+
+
+
+Access Byte
+| P | DPL | DT | TYPE|
+7   6     5    3     0
+
+P- Segment is present? (1=Yes)
+DPL - Which Ring (0 to 3)
+DT - Descriptor Type
+Type - Which type?
+
+Granularity Byte
+| G | D | 0 | A | Seg ken. 19:16 |
+7   6   5   4   3                0
+
+G- Granularity(0 = 1byte,1 = 4kbyte)
+D- Operand Size(0 = 16 bit,1 = 32-bit)
+0- Always 0
+A- Available for Ststem(Always set to 0)
