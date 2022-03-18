@@ -30,6 +30,8 @@ typedef struct GDT_PTR GDT_PTR_T;
 GDT_ENTRY_T gdt[3];
 GDT_PTR_T gp;
 
+void gdt_install();
+
 extern void gdt_flush();
 
 #endif // GDT_H_

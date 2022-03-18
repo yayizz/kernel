@@ -12,12 +12,11 @@
 
 void kernel_main(void)
 {
+    gdt_install();
+
     monitor_init();
 
     monitor_write("hello\n");
+    monitor_write("GDT is working\n");
 
-    monitor_write("is anyone home\n");
-
-    for(int i = 0;i<500000000;i++);
-    monitor_clear();
 }
